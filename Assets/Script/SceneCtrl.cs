@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class SceneCtrl : MonoBehaviour {
     private int lifeNum = 3;
-    private int score = 0; 
+    private int score = 0;
+    private bool isRunning = false;
+    GameObject scoreDisplay;
+    GameObject lifeDisplay;
 	// Use this for initialization
 	void Start () {
-        GameObject.Find("Canvas/ScoreText").GetComponent<ScoreDisplay>().ShowScore(score);
-        GameObject.Find("Canvas/LifeText").GetComponent<LifeDisplay>().ShowLife(lifeNum);
+        scoreDisplay = GameObject.Find("Canvas/ScoreText");
+        lifeDisplay = GameObject.Find("Canvas/LifeText");
+        //显示分数
+        scoreDisplay.GetComponent<ScoreDisplay>().ShowScore(score);
+        lifeDisplay.GetComponent<LifeDisplay>().ShowLife(lifeNum);
     }
 	
 	// Update is called once per frame
@@ -18,12 +24,12 @@ public class SceneCtrl : MonoBehaviour {
 
     public void HeroFall() {
         lifeNum--;
-        GameObject.Find("Canvas/LifeText").GetComponent<LifeDisplay>().ShowLife(lifeNum);
+        lifeDisplay.GetComponent<LifeDisplay>().ShowLife(lifeNum);
     }
 
     public void EnemyFall() {
         score += 50;
-        GameObject.Find("Canvas/ScoreText").GetComponent<ScoreDisplay>().ShowScore(score);
+        scoreDisplay.GetComponent<ScoreDisplay>().ShowScore(score);
     }
 
 }

@@ -25,7 +25,7 @@ public class AmmoCtrl : MonoBehaviour {
     }
 
     private void DestroyAmmo() {
-        DestroyImmediate(this);
+        DestroyImmediate(this.gameObject);
     }
 
     private void MoveAmmo() {
