@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SceneCtrl : MonoBehaviour {
-    private int lifeNum = 3;
+    private int lifeNum = 2;
     private int score = 0;
-    private bool isRunning = true;
+    private bool isRunning = false;
     GameObject scoreDisplay;
     GameObject lifeDisplay;
+    GameObject gameOverDsiplay;
 	// Use this for initialization
 	void Start () {
         scoreDisplay = GameObject.Find("Canvas/ScoreText");
         lifeDisplay = GameObject.Find("Canvas/LifeText");
+        gameOverDsiplay = GameObject.Find("Canvas/GameOverText");
         //显示分数
         scoreDisplay.GetComponent<ScoreDisplay>().ShowScore(score);
         lifeDisplay.GetComponent<LifeDisplay>().ShowLife(lifeNum);
@@ -24,7 +26,19 @@ public class SceneCtrl : MonoBehaviour {
 
     public void HeroFall() {
         lifeNum--;
-        lifeDisplay.GetComponent<LifeDisplay>().ShowLife(lifeNum);
+        if (lifeNum >= 0)
+        {
+            lifeDisplay.GetComponent<LifeDisplay>().ShowLife(lifeNum);
+            Invoke("ResetHero", 1f);
+        }
+        else {
+            IsRunning = false;
+            gameOverDsiplay.GetComponent<GameOverDisplay>().ShowGameOver();
+        }
+    }
+
+    private void ResetHero() {
+        this.GetComponent<CreatePlane>().CreateHero();
     }
 
     public void EnemyFall() {

@@ -44,8 +44,9 @@ public class CreatePlane : MonoBehaviour {
         createTime = Time.time;
     }
 
-    private void CreateHero() {
+    public void CreateHero() {
         GameObject heroPlane = Instantiate(hero);
         heroPlane.transform.position = new Vector3(0f, -5f, 0f);
+        sceneCtrl.GetComponent<SceneCtrl>().IsRunning = true;
     }
 }

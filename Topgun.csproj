@@ -81,6 +81,7 @@
     <Compile Include="Assets\Script\EnemyPlaneCtrl.cs" />
     <Compile Include="Assets\Script\PlaneCtrl.cs" />
     <Compile Include="Assets\Script\SceneCtrl.cs" />
+    <Compile Include="Assets\Script\UI\GameOverDisplay.cs" />
     <Compile Include="Assets\Script\UI\LifeDisplay.cs" />
     <Compile Include="Assets\Script\UI\ScoreDisplay.cs" />
   </ItemGroup>
