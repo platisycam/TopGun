@@ -7,16 +7,22 @@ public class EnemyPlaneCtrl : MonoBehaviour {
     int shootGap = 100;
     int frameTime = 0;
     GameObject ammo;
-	// Use this for initialization
-	void Start () {
+    GameObject sceneCtrl;
+    // Use this for initialization
+    void Start () {
         ammo = (GameObject)Resources.Load("Prefab/EnemyAmmo");
         Invoke("DestroyEnemy", 10f);
+        sceneCtrl = GameObject.Find("SystemObject");
     }
 	
 	// Update is called once per frame
 	void Update () {
-        MoveEnemyPlane();
-        ShootAction();
+        if (sceneCtrl != null && sceneCtrl.GetComponent<SceneCtrl>().IsRunning)
+        {
+            MoveEnemyPlane();
+            ShootAction();
+        }
+
     }
 
     void OnTriggerEnter2D(Collider2D plane)
@@ -47,7 +53,7 @@ public class EnemyPlaneCtrl : MonoBehaviour {
 
     private void DestroyEnemy()
     {
-        DestroyImmediate(this);
+        DestroyImmediate(this.gameObject);
     }
 
     public void OnShoot()

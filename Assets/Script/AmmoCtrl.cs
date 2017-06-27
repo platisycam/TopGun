@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class AmmoCtrl : MonoBehaviour {
     float move = 0.1f;
-	// Use this for initialization
-	void Start () {
+    GameObject sceneCtrl;
+    // Use this for initialization
+    void Start () {
         Invoke("DestroyAmmo", 5f);
-
+        sceneCtrl = GameObject.Find("SystemObject");
     }
-	
-	// Update is called once per frame
-	void Update () {
-        MoveAmmo();
+
+    // Update is called once per frame
+    void Update () {
+        if (sceneCtrl != null && sceneCtrl.GetComponent<SceneCtrl>().IsRunning)
+        {
+            MoveAmmo();
+        }
     }
 
     void OnTriggerEnter2D(Collider2D plane)

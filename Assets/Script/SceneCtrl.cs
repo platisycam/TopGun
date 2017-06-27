@@ -5,7 +5,7 @@ using UnityEngine;
 public class SceneCtrl : MonoBehaviour {
     private int lifeNum = 3;
     private int score = 0;
-    private bool isRunning = false;
+    private bool isRunning = true;
     GameObject scoreDisplay;
     GameObject lifeDisplay;
 	// Use this for initialization
@@ -31,5 +31,16 @@ public class SceneCtrl : MonoBehaviour {
         score += 50;
         scoreDisplay.GetComponent<ScoreDisplay>().ShowScore(score);
     }
+
+    public bool IsRunning{
+        get{
+            return isRunning;
+        }
+
+        set{
+            this.isRunning = value;
+        }
+    }
+
 
 }

@@ -10,17 +10,23 @@ public class CreatePlane : MonoBehaviour {
     float x;
     GameObject enemy;
     GameObject hero;
-	// Use this for initialization
-	void Start () {
+    GameObject sceneCtrl;
+    // Use this for initialization
+    void Start () {
         enemy = (GameObject)Resources.Load("Prefab/EnemyPlane");
         hero = (GameObject)Resources.Load("Prefab/HeroPlane");
+        sceneCtrl = GameObject.Find("SystemObject");
         CreateHero();
 
     }
 	
 	// Update is called once per frame
 	void Update () {
-        JudgeCreateEnemy();
+        if (sceneCtrl != null && sceneCtrl.GetComponent<SceneCtrl>().IsRunning)
+        {
+            JudgeCreateEnemy();
+        }
+
 
     }
 

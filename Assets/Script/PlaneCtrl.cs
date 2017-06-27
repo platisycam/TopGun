@@ -7,14 +7,23 @@ public class PlaneCtrl : MonoBehaviour {
     int shootGap = 20;
     int frameTime = 0;
     GameObject ammo;
-	// Use this for initialization
-	void Start () {
+    GameObject sceneCtrl;
+    // Use this for initialization
+    void Start () {
         ammo = (GameObject)Resources.Load("Prefab/Ammo");
+        sceneCtrl = GameObject.Find("SystemObject");
     }
 	
 	// Update is called once per frame
 	void Update () {
         //move action
+        if (sceneCtrl != null && sceneCtrl.GetComponent<SceneCtrl>().IsRunning)
+        {
+            MoveAction();
+        }
+    }
+
+    private void MoveAction() {
         if (Input.GetKey(KeyCode.RightArrow) && this.transform.position.x < 7.2f)
         {
             this.transform.position += new Vector3(move, 0f, 0f);
@@ -46,7 +55,7 @@ public class PlaneCtrl : MonoBehaviour {
         {
             frameTime = 0;
         }
-    }
+    } 
 
 
     private void Shoot() {
