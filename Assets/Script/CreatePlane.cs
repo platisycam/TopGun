@@ -17,7 +17,6 @@ public class CreatePlane : MonoBehaviour {
         hero = (GameObject)Resources.Load("Prefab/HeroPlane");
         sceneCtrl = GameObject.Find("SystemObject");
         CreateHero();
-
     }
 	
 	// Update is called once per frame

@@ -7,8 +7,9 @@ public class EnemyAmmoCtrl : MonoBehaviour {
     GameObject sceneCtrl;
     // Use this for initialization
     void Start () {
-        DestroyAmmo();
+        Invoke("DestroyAmmo", 5f);
         sceneCtrl = GameObject.Find("SystemObject");
+        this.tag = "Ammo";
     }
 	
 	// Update is called once per frame
@@ -30,7 +31,7 @@ public class EnemyAmmoCtrl : MonoBehaviour {
 
     private void DestroyAmmo()
     {
-        Destroy(this.gameObject, 5f);
+        DestroyImmediate(this.gameObject);
     }
 
     private void MoveAmmo()

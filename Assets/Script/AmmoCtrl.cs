@@ -9,6 +9,7 @@ public class AmmoCtrl : MonoBehaviour {
     void Start () {
         Invoke("DestroyAmmo", 5f);
         sceneCtrl = GameObject.Find("SystemObject");
+        this.tag = "Ammo";
     }
 
     // Update is called once per frame

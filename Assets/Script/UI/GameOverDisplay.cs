@@ -15,8 +15,12 @@ public class GameOverDisplay : MonoBehaviour {
 		
 	}
 
-    public void ShowGameOver()
+    public void ShowGameOver(bool isGaming)
     {
-        this.GetComponent<Text>().text = "Game Over !";
+        if (isGaming) {
+            this.GetComponent<Text>().text = "";
+        } else {
+            this.GetComponent<Text>().text = "Game Over !";
+        }
     }
 }
