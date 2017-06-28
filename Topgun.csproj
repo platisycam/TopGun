@@ -83,6 +83,7 @@
     <Compile Include="Assets\Script\SceneCtrl.cs" />
     <Compile Include="Assets\Script\UI\GameOverDisplay.cs" />
     <Compile Include="Assets\Script\UI\LifeDisplay.cs" />
+    <Compile Include="Assets\Script\UI\MenuCtrl.cs" />
     <Compile Include="Assets\Script\UI\ScoreDisplay.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
