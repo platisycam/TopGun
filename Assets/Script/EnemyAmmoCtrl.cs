@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class EnemyAmmoCtrl : MonoBehaviour {
     float move = -0.05f;
-    GameObject sceneCtrl;
     // Use this for initialization
     void Start () {
         Invoke("DestroyAmmo", 5f);
-        sceneCtrl = GameObject.Find("SystemObject");
         this.tag = "Ammo";
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (sceneCtrl != null && sceneCtrl.GetComponent<SceneCtrl>().IsRunning) {
+        if (Time.timeScale == 1) {
             MoveAmmo();
         }
     }

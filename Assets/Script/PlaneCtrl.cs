@@ -17,7 +17,7 @@ public class PlaneCtrl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         //move action
-        if (sceneCtrl != null && sceneCtrl.GetComponent<SceneCtrl>().IsRunning)
+        if (Time.timeScale == 1)
         {
             MoveAction();
         }
@@ -64,7 +64,7 @@ public class PlaneCtrl : MonoBehaviour {
 
     public void OnShoot()
     {
-        GameObject.Find("SystemObject").GetComponent<SceneCtrl>().HeroFall();
+        sceneCtrl.GetComponent<SceneCtrl>().HeroFall();
         Destroy(this.gameObject);
 
     }

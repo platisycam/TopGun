@@ -5,16 +5,22 @@ using UnityEngine;
 public class SceneCtrl : MonoBehaviour {
     private int lifeNum;
     private int score;
-    private bool isRunning;
+    //private bool isRunning;
     private bool isGaming;
     GameObject scoreDisplay;
     GameObject lifeDisplay;
     GameObject gameOverDsiplay;
+    GameObject menu;
+    GameObject inputName;
 	// Use this for initialization
 	void Start () {
         scoreDisplay = GameObject.Find("Canvas/ScoreText");
         lifeDisplay = GameObject.Find("Canvas/LifeText");
         gameOverDsiplay = GameObject.Find("Canvas/GameOverText");
+        menu = GameObject.Find("Canvas/Menu");
+        inputName = GameObject.Find("Canvas/InputName");
+        menu.SetActive(false);
+        inputName.SetActive(false);
         //显示分数
         ResetDisplay();
     }
@@ -24,7 +30,15 @@ public class SceneCtrl : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.Escape)){
             if (isGaming)
             {
-                IsRunning = !IsRunning;
+                if (Time.timeScale == 1)
+                {
+                    menu.GetComponent<MenuCtrl>().ShowMenu();
+                    Time.timeScale = 0;
+                }
+                else {
+                    menu.GetComponent<MenuCtrl>().BlankMenu();
+                    Time.timeScale = 1;
+                }
             }
             else {
                 InitMisson();
@@ -47,7 +61,7 @@ public class SceneCtrl : MonoBehaviour {
             Invoke("ResetHero", 1f);
         }
         else {
-            IsRunning = false;
+            Time.timeScale = 0;
             gameOverDsiplay.GetComponent<GameOverDisplay>().ShowGameOver(isGaming);
         }
     }
@@ -64,7 +78,8 @@ public class SceneCtrl : MonoBehaviour {
     private void ResetDisplay() {
         lifeNum = 2;
         score = 0;
-        isRunning = false;
+        //isRunning = false;
+        Time.timeScale = 0;
         isGaming = true;
         scoreDisplay.GetComponent<ScoreDisplay>().ShowScore(score);
         lifeDisplay.GetComponent<LifeDisplay>().ShowLife(lifeNum);
@@ -87,15 +102,15 @@ public class SceneCtrl : MonoBehaviour {
         ResetHero();
     }
 
-    public bool IsRunning{
-        get{
-            return isRunning;
-        }
+    //public bool IsRunning{
+    //    get{
+    //        return isRunning;
+    //    }
 
-        set{
-            this.isRunning = value;
-        }
-    }
+    //    set{
+    //        this.isRunning = value;
+    //    }
+    //}
 
     public bool IsGaming {
         get

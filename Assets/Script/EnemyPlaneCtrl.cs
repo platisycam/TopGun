@@ -17,7 +17,7 @@ public class EnemyPlaneCtrl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (sceneCtrl != null && sceneCtrl.GetComponent<SceneCtrl>().IsRunning)
+        if (Time.timeScale == 1)
         {
             MoveEnemyPlane();
             ShootAction();
@@ -58,7 +58,7 @@ public class EnemyPlaneCtrl : MonoBehaviour {
 
     public void OnShoot()
     {
-        GameObject.Find("SystemObject").GetComponent<SceneCtrl>().EnemyFall();
+        sceneCtrl.GetComponent<SceneCtrl>().EnemyFall();
         Destroy(this.gameObject);
     }
 

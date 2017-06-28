@@ -10,18 +10,16 @@ public class CreatePlane : MonoBehaviour {
     float x;
     GameObject enemy;
     GameObject hero;
-    GameObject sceneCtrl;
     // Use this for initialization
     void Start () {
         enemy = (GameObject)Resources.Load("Prefab/EnemyPlane");
         hero = (GameObject)Resources.Load("Prefab/HeroPlane");
-        sceneCtrl = GameObject.Find("SystemObject");
         CreateHero();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (sceneCtrl != null && sceneCtrl.GetComponent<SceneCtrl>().IsRunning)
+        if (Time.timeScale == 1)
         {
             JudgeCreateEnemy();
         }
@@ -30,7 +28,7 @@ public class CreatePlane : MonoBehaviour {
     }
 
     private void JudgeCreateEnemy() {
-        if (Time.time - createTime > 2f)
+        if (Time.timeScale == 1 && Time.time - createTime > 2f)
         {
             CreateOneEnemy();
         }
@@ -46,6 +44,6 @@ public class CreatePlane : MonoBehaviour {
     public void CreateHero() {
         GameObject heroPlane = Instantiate(hero);
         heroPlane.transform.position = new Vector3(0f, -5f, 0f);
-        sceneCtrl.GetComponent<SceneCtrl>().IsRunning = true;
+        Time.timeScale = 1;
     }
 }

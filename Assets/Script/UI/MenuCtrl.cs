@@ -6,7 +6,6 @@ public class MenuCtrl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        this.gameObject.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -21,5 +20,9 @@ public class MenuCtrl : MonoBehaviour {
     public void BlankMenu()
     {
         this.gameObject.SetActive(false);
+    }
+
+    public void ExitGame() {
+        Application.Quit();
     }
 }
