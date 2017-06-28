@@ -7,7 +7,6 @@ public class ScoreDisplay : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        this.GetComponent<Text>().text = "Score: ";
 
     }
 	
