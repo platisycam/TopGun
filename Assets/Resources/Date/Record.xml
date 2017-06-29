@@ -1,0 +1,22 @@
+<record>
+	<player>
+		<name>1</name>
+		<score>1</score>
+		<date>1</date>
+	</player>
+	<player>
+		<name>2</name>
+		<score>2</score>
+		<date>2</date>
+	</player>
+	<player>
+		<name>3</name>
+		<score>3</score>
+		<date>3</date>
+	</player>
+	<player>
+		<name>4</name>
+		<score>4</score>
+		<date>4</date>
+	</player>
+</record>
