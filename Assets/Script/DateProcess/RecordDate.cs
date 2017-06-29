@@ -7,6 +7,15 @@ public class RecordDate {
     private string score;
     private string date;
 
+    public RecordDate() {
+    }
+
+    public RecordDate(string name, string score) {
+        this.name = name;
+        this.score = score;
+        this.date = System.DateTime.Now.ToString();
+    }
+
     public string Name
     {
         get
