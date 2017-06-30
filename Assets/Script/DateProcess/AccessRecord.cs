@@ -5,16 +5,15 @@ using System.Xml;
 using System.IO;
 
 public class AccessRecord : MonoBehaviour {
-    TextAsset txt;
     XmlDocument xml;
-    string recordPath;
     // Use this for initialization
     void Start () {
         //recordPath = Application.dataPath + "/Date/Record";
         //txt = Resources.Load("Date/Record", typeof(TextAsset)) as TextAsset;
         //xml = new XmlDocument();
         //xml = InitXml(txt);
-        WriteRecord("a","100");
+        Debug.Log("00");
+        WriteRecord("a","112");
     }
 	
 	// Update is called once per frame
@@ -69,11 +68,12 @@ public class AccessRecord : MonoBehaviour {
     }
 
     public void WriteRecord(string name, string score) {
+        Debug.Log("0");
         xml = new XmlDocument();
         try {
             xml.Load("C:/record.xml");
         }
-        catch (FileNotFoundException e) {
+        catch (FileNotFoundException) {
             xml = CreateRecord();
         }
         RecordDate newRecord = new RecordDate(name, score);
@@ -81,21 +81,38 @@ public class AccessRecord : MonoBehaviour {
     }
 
     public void SortXml(XmlDocument xml, RecordDate newRecord) {
+        Debug.Log("1" + newRecord.Name + "---" + newRecord.Score + "-----------" + newRecord.Date);
         XmlNode recordNode = xml.SelectSingleNode("record");
         XmlNodeList playerNodes = recordNode.ChildNodes;
         int count = playerNodes.Count;
-        List<RecordDate> recordList = new List<RecordDate>();
-        RecordDate record;
+        bool isAdded = false;
         for (int i = 0; i < count; i++)
         {
-            record = new RecordDate();
-            record.Name = playerNodes[i].ChildNodes[0].InnerText;
-            record.Score = playerNodes[i].ChildNodes[1].InnerText;
-            record.Date = playerNodes[i].ChildNodes[2].InnerText;
-            recordList.Add(record);
+            if (playerNodes[0].ChildNodes[1].InnerText == "") {
+                playerNodes[0].ChildNodes[0].InnerText = newRecord.Name;
+                playerNodes[0].ChildNodes[1].InnerText = newRecord.Score;
+                playerNodes[0].ChildNodes[2].InnerText = newRecord.Date;
+                isAdded = true;
+                break;
+            }
+
+            if (int.Parse(newRecord.Score) > int.Parse(playerNodes[i].ChildNodes[1].InnerText))
+            {
+                XmlNode playerNode = playerNodes[i].Clone();
+                playerNode.ChildNodes[0].InnerText = newRecord.Name;
+                playerNode.ChildNodes[1].InnerText = newRecord.Score;
+                playerNode.ChildNodes[2].InnerText = newRecord.Date;
+                recordNode.InsertBefore(playerNode, playerNodes[i]);
+                isAdded = true;
+                break;
+            }
         }
-
+        if (!isAdded) {
+            playerNodes[0].ChildNodes[0].InnerText = newRecord.Name;
+            playerNodes[0].ChildNodes[1].InnerText = newRecord.Score;
+            playerNodes[0].ChildNodes[2].InnerText = newRecord.Date;
+        }
+        xml.Save("C:/record.xml");
     }
-
 
 }
