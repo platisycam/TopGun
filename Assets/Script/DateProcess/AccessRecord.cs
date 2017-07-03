@@ -12,8 +12,7 @@ public class AccessRecord : MonoBehaviour {
         //txt = Resources.Load("Date/Record", typeof(TextAsset)) as TextAsset;
         //xml = new XmlDocument();
         //xml = InitXml(txt);
-        Debug.Log("00");
-        WriteRecord("a","112");
+        //WriteRecord("a","112");
     }
 	
 	// Update is called once per frame
@@ -68,7 +67,6 @@ public class AccessRecord : MonoBehaviour {
     }
 
     public void WriteRecord(string name, string score) {
-        Debug.Log("0");
         xml = new XmlDocument();
         try {
             xml.Load("C:/record.xml");
@@ -81,7 +79,6 @@ public class AccessRecord : MonoBehaviour {
     }
 
     public void SortXml(XmlDocument xml, RecordDate newRecord) {
-        Debug.Log("1" + newRecord.Name + "---" + newRecord.Score + "-----------" + newRecord.Date);
         XmlNode recordNode = xml.SelectSingleNode("record");
         XmlNodeList playerNodes = recordNode.ChildNodes;
         int count = playerNodes.Count;

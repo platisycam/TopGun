@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SceneCtrl : MonoBehaviour {
     private int lifeNum;
-    private int score;
+    private int score = 0;
     //private bool isRunning;
     private bool isGaming;
     GameObject scoreDisplay;
@@ -12,6 +12,7 @@ public class SceneCtrl : MonoBehaviour {
     GameObject gameOverDsiplay;
     GameObject menu;
     GameObject inputName;
+    GameObject recordDisplay;
 	// Use this for initialization
 	void Start () {
         scoreDisplay = GameObject.Find("Canvas/ScoreText");
@@ -19,8 +20,10 @@ public class SceneCtrl : MonoBehaviour {
         gameOverDsiplay = GameObject.Find("Canvas/GameOverText");
         menu = GameObject.Find("Canvas/Menu");
         inputName = GameObject.Find("Canvas/InputName");
+        recordDisplay = GameObject.Find("Canvas/Record");
         menu.SetActive(false);
         inputName.SetActive(false);
+        recordDisplay.SetActive(false);
         //显示分数
         ResetDisplay();
     }
@@ -32,16 +35,17 @@ public class SceneCtrl : MonoBehaviour {
             {
                 if (Time.timeScale == 1)
                 {
-                    menu.GetComponent<MenuCtrl>().ShowMenu();
+                    menu.SetActive(true);
                     Time.timeScale = 0;
                 }
                 else {
-                    menu.GetComponent<MenuCtrl>().BlankMenu();
+                    menu.SetActive(false);
                     Time.timeScale = 1;
                 }
             }
             else {
-                InitMisson();
+                inputName.SetActive(true);
+                inputName.GetComponent<InputNameDisplay>().DisplayScore(score.ToString());
             }
         }
 	}
@@ -87,11 +91,12 @@ public class SceneCtrl : MonoBehaviour {
 
     }
 
-    private void InitMisson()
+    public void InitMisson()
     {
         ResetDisplay();
         GameObject[] ammos = GameObject.FindGameObjectsWithTag("Ammo");
         GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        inputName.SetActive(false);
         for (int i = 0, j = ammos.Length; i < j; i++) {
             Destroy(ammos[i]);
         }
@@ -102,15 +107,6 @@ public class SceneCtrl : MonoBehaviour {
         ResetHero();
     }
 
-    //public bool IsRunning{
-    //    get{
-    //        return isRunning;
-    //    }
-
-    //    set{
-    //        this.isRunning = value;
-    //    }
-    //}
 
     public bool IsGaming {
         get

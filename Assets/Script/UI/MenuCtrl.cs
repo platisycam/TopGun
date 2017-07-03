@@ -13,14 +13,14 @@ public class MenuCtrl : MonoBehaviour {
 		
 	}
 
-    public void ShowMenu() {
-        this.gameObject.SetActive(true);
-    }
+    //public void ShowMenu() {
+    //    this.gameObject.SetActive(true);
+    //}
 
-    public void BlankMenu()
-    {
-        this.gameObject.SetActive(false);
-    }
+    //public void BlankMenu()
+    //{
+    //    this.gameObject.SetActive(false);
+    //}
 
     public void ExitGame() {
         Application.Quit();
