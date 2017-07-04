@@ -8,11 +8,7 @@ public class AccessRecord : MonoBehaviour {
     XmlDocument xml;
     // Use this for initialization
     void Start () {
-        //recordPath = Application.dataPath + "/Date/Record";
-        //txt = Resources.Load("Date/Record", typeof(TextAsset)) as TextAsset;
-        //xml = new XmlDocument();
-        //xml = InitXml(txt);
-        //WriteRecord("a","112");
+
     }
 	
 	// Update is called once per frame
@@ -26,7 +22,8 @@ public class AccessRecord : MonoBehaviour {
         return xml;
     }
 
-    public void PrintRecord(XmlDocument xml) {
+    public List<RecordDate> GetRecordListFromXml() {
+        XmlDocument xml = ReadFile();
         XmlNode recordNode = xml.SelectSingleNode("record");
         XmlNodeList playerNodes = recordNode.ChildNodes;
         int count = playerNodes.Count;
@@ -45,35 +42,11 @@ public class AccessRecord : MonoBehaviour {
             Debug.Log(recordList[i].Score);
             Debug.Log(recordList[i].Date);
         }
-    }
-
-    public XmlDocument CreateRecord() {
-        xml = new XmlDocument();
-        XmlElement record = xml.CreateElement("record");
-        xml.AppendChild(record);
-        XmlElement player = xml.CreateElement("player");
-        record.AppendChild(player);
-        XmlElement name = xml.CreateElement("name");
-        XmlElement score = xml.CreateElement("score");
-        XmlElement date = xml.CreateElement("date");
-        player.AppendChild(name);
-        name.InnerText = "";
-        player.AppendChild(score);
-        score.InnerText = "";
-        player.AppendChild(date);
-        date.InnerText = "";
-        PrintRecord(xml);
-        return xml;
+        return recordList;
     }
 
     public void WriteRecord(string name, string score) {
-        xml = new XmlDocument();
-        try {
-            xml.Load("C:/record.xml");
-        }
-        catch (FileNotFoundException) {
-            xml = CreateRecord();
-        }
+        xml = ReadFile();
         RecordDate newRecord = new RecordDate(name, score);
         SortXml(xml, newRecord);
     }
@@ -99,17 +72,69 @@ public class AccessRecord : MonoBehaviour {
                 playerNode.ChildNodes[0].InnerText = newRecord.Name;
                 playerNode.ChildNodes[1].InnerText = newRecord.Score;
                 playerNode.ChildNodes[2].InnerText = newRecord.Date;
-                recordNode.InsertBefore(playerNode, playerNodes[i]);
+
+                if (i <= 9)
+                {
+                    recordNode.InsertBefore(playerNode, playerNodes[i]);
+                }
+                else {
+                    recordNode.ReplaceChild(playerNode, playerNodes[i]);
+                }
                 isAdded = true;
                 break;
             }
         }
-        if (!isAdded) {
-            playerNodes[0].ChildNodes[0].InnerText = newRecord.Name;
-            playerNodes[0].ChildNodes[1].InnerText = newRecord.Score;
-            playerNodes[0].ChildNodes[2].InnerText = newRecord.Date;
+        if (!isAdded && count < 10) {
+            XmlNode playerNode = playerNodes[count - 1].Clone();
+            playerNode.ChildNodes[0].InnerText = newRecord.Name;
+            playerNode.ChildNodes[1].InnerText = newRecord.Score;
+            playerNode.ChildNodes[2].InnerText = newRecord.Date;
+            recordNode.InsertAfter(playerNode, playerNodes[count - 1]);
         }
         xml.Save("C:/record.xml");
     }
 
+    public bool IsRecord(int score) {
+        xml = ReadFile();
+        XmlNode recordNode = xml.SelectSingleNode("record");
+        XmlNodeList playerNodes = recordNode.ChildNodes;
+        int count = playerNodes.Count;
+        bool isRecord = false;
+        for (int i = 0; i < count; i++)
+        {
+            if (playerNodes[0].ChildNodes[1].InnerText == "" || score >= int.Parse(playerNodes[i].ChildNodes[1].InnerText) || count < 10)
+            {
+                isRecord = true;
+                break;
+            }
+        }
+        return isRecord;
+    }
+
+
+
+    private XmlDocument ReadFile() {
+        xml = new XmlDocument();
+        try
+        {
+            xml.Load("C:/record.xml");
+        }
+        catch (FileNotFoundException)
+        {
+            XmlElement record = xml.CreateElement("record");
+            xml.AppendChild(record);
+            XmlElement player = xml.CreateElement("player");
+            record.AppendChild(player);
+            XmlElement name = xml.CreateElement("name");
+            XmlElement score = xml.CreateElement("score");
+            XmlElement date = xml.CreateElement("date");
+            player.AppendChild(name);
+            name.InnerText = "";
+            player.AppendChild(score);
+            score.InnerText = "";
+            player.AppendChild(date);
+            date.InnerText = "";
+        }
+        return xml;
+    }
 }

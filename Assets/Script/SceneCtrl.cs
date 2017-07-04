@@ -44,11 +44,25 @@ public class SceneCtrl : MonoBehaviour {
                 }
             }
             else {
-                inputName.SetActive(true);
-                inputName.GetComponent<InputNameDisplay>().DisplayScore(score.ToString());
+                if (this.GetComponent<AccessRecord>().IsRecord(score))
+                {
+                    inputName.SetActive(true);
+                    inputName.GetComponent<InputNameDisplay>().DisplayScore(score.ToString());
+                }
+                else {
+                    InitMisson();
+                }
+
+
             }
         }
 	}
+
+    public void DisplayRecords() {
+        recordDisplay.SetActive(true);
+        List<RecordDate> records = this.GetComponent<AccessRecord>().GetRecordListFromXml();
+        recordDisplay.GetComponent<RecordDisplay>().DisplayRecoreds(records);
+    }
 
     public void HeroFall() {
         lifeNum--;
